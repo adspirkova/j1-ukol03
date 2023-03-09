@@ -7,6 +7,8 @@ public class Pocitac {
     private Pamet ram;
     private Disk pevnyDisk;
 
+    private Disk druhyDisk;
+
     @Override
     public String toString() {
         return "Pocitac{" +
@@ -14,6 +16,7 @@ public class Pocitac {
                 ", cpu=" + cpu +
                 ", ram=" + ram +
                 ", pevnyDisk=" + pevnyDisk +
+                ", druhyDisk=" + druhyDisk +
                 '}';
     }
 
@@ -79,13 +82,24 @@ public class Pocitac {
         this.pevnyDisk = pevnyDisk;
     }
 
+    public Disk getDruhyDisk() {
+        return druhyDisk;
+    }
+
+    public void setDruhyDisk(Disk druhyDisk) {
+        this.druhyDisk = druhyDisk;
+    }
+
     public void vytvorSouborOVelikosti(long velikost) {
         if (jeZapnuty) {
-            if (this.pevnyDisk.getVyuziteMisto_B() + velikost > this.pevnyDisk.getKapacitaDisku_B()) {
-                System.err.println("Soubor neni mozne pridat z duvodu naplneni kapacity");
-            } else {
+            if (this.pevnyDisk.getVyuziteMisto_B() + this.druhyDisk.getVyuziteMisto_B() + velikost > this.druhyDisk.getKapacitaDisku_B() + this.pevnyDisk.getKapacitaDisku_B()) {
+                System.err.println("Soubor neni mozne pridat z duvodu naplneni kapacity obou disku");
+            } else if (this.pevnyDisk.getKapacitaDisku_B() >= this.pevnyDisk.getVyuziteMisto_B() + velikost) {
                 this.pevnyDisk.setVyuziteMisto_B(this.pevnyDisk.getVyuziteMisto_B() + velikost);
-                System.out.println("Soubor pridan");
+                System.out.println("Soubor pridan na pevny disk");
+            } else {
+                this.druhyDisk.setVyuziteMisto_B(this.druhyDisk.getVyuziteMisto_B() + velikost);
+                System.out.println("Soubor pridan na druhy disk");
             }
         } else {
             System.out.println("Pocitac nebezi");
@@ -94,11 +108,14 @@ public class Pocitac {
 
     public void vymazSouboryOVelikosti(long velikost) {
         if (jeZapnuty) {
-            if (this.pevnyDisk.getVyuziteMisto_B() - velikost < 0) {
-                System.err.println("Soubor nenalezen");
-            } else {
+            if (this.pevnyDisk.getVyuziteMisto_B() + this.druhyDisk.getVyuziteMisto_B() - velikost <= 0) {
+                System.err.println("Soubor nelze smazat");
+            } else if (this.pevnyDisk.getVyuziteMisto_B() - velikost  >= 0) {
                 this.pevnyDisk.setVyuziteMisto_B(this.pevnyDisk.getVyuziteMisto_B() - velikost);
-                System.out.println("Soubor smazan");
+                System.out.println("Soubor smazan z prvniho disku");
+            } else {
+                this.druhyDisk.setVyuziteMisto_B(this.druhyDisk.getVyuziteMisto_B() - velikost);
+                System.out.println("Soubor smazan z druheho disku");
             }
         } else {
             System.out.println("Pocitac nebezi");

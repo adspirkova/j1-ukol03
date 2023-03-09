@@ -14,7 +14,8 @@ public class HlavniProgram {
         //TODO tady bude váš kód - vytvoření instance třídy Pocitac, zapnutí, vpynutí, výpis hodnot.
         System.out.println("Program spuštěn.");
 //        prvotniNastaveni();
-        pridaniASmazaniSouboru();
+//        pridaniASmazaniSouboru();
+        spustPocitacSeDvemiDisky();
     }
 
     public static void prvotniNastaveni() {
@@ -80,6 +81,47 @@ public class HlavniProgram {
         adelyPocitac.vytvorSouborOVelikosti(255_195_746_305L);// Soubor se nevejde na disk
         adelyPocitac.vymazSouboryOVelikosti(255_195_746_305L);// Soubor neexistuje
         adelyPocitac.vymazSouboryOVelikosti(255_195_746_304L);// Soubor smazan
+        System.out.println(adelyPocitac);
+    }
+
+    public static void spustPocitacSeDvemiDisky() {
+        //TODO tady bude váš kód - vytvoření instance třídy Pocitac, zapnutí, vpynutí, výpis hodnot.
+        System.out.println("Program spuštěn.");
+
+        Pocitac adelyPocitac;
+        adelyPocitac = new Pocitac();
+
+        Procesor adelyProcesor = new Procesor();
+        adelyProcesor.setRychlost_Hz(3_400_000_000_000L);
+        adelyProcesor.setVyrobce("Intel");
+
+        Pamet adelyPamet = new Pamet();
+        adelyPamet.setKapacitaPameti_B(16_000_000_000L);
+
+        Disk adelyDisk = new Disk();
+        adelyDisk.setKapacitaDisku_B(255_195_746_304L);
+
+        Disk adelyDruhyDisk = new Disk();
+        adelyDruhyDisk.setKapacitaDisku_B(455_395_946_304L);
+
+        adelyPocitac.setCpu(adelyProcesor);
+        adelyPocitac.setRam(adelyPamet);
+        adelyPocitac.setPevnyDisk(adelyDisk);
+        adelyPocitac.setDruhyDisk(adelyDruhyDisk);
+
+        adelyPocitac.zapniPocitac();
+        System.out.println(adelyPocitac);
+
+        adelyPocitac.vytvorSouborOVelikosti(255_195_746_304L); // Soubor pridan na prvni disk
+        System.out.println(adelyPocitac);
+        adelyPocitac.vytvorSouborOVelikosti(455_395_946_304L);// Soubor pridan na druhy disk
+        System.out.println(adelyPocitac);
+        adelyPocitac.vytvorSouborOVelikosti(4L);// Soubor uz nelze pridat
+        adelyPocitac.vymazSouboryOVelikosti(255_195_746_304L);// Soubor smazan z prvnihoo disku
+        System.out.println(adelyPocitac);
+        adelyPocitac.vymazSouboryOVelikosti(255_395_946_304L);// Soubor smazan z druheho disku
+        System.out.println(adelyPocitac);
+        adelyPocitac.vymazSouboryOVelikosti(199_000_000_000L);// Soubor smazan z druheho disku
         System.out.println(adelyPocitac);
     }
 
