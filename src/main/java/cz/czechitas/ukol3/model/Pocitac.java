@@ -78,4 +78,31 @@ public class Pocitac {
     public void setPevnyDisk(Disk pevnyDisk) {
         this.pevnyDisk = pevnyDisk;
     }
+
+    public void vytvorSouborOVelikosti(long velikost) {
+        if (jeZapnuty) {
+            if (this.pevnyDisk.getVyuziteMisto_B() + velikost > this.pevnyDisk.getKapacitaDisku_B()) {
+                System.err.println("Soubor neni mozne pridat z duvodu naplneni kapacity");
+            } else {
+                this.pevnyDisk.setVyuziteMisto_B(this.pevnyDisk.getVyuziteMisto_B() + velikost);
+                System.out.println("Soubor pridan");
+            }
+        } else {
+            System.out.println("Pocitac nebezi");
+        }
+    }
+
+    public void vymazSouboryOVelikosti(long velikost) {
+        if (jeZapnuty) {
+            if (this.pevnyDisk.getVyuziteMisto_B() - velikost < 0) {
+                System.err.println("Soubor nenalezen");
+            } else {
+                this.pevnyDisk.setVyuziteMisto_B(this.pevnyDisk.getVyuziteMisto_B() - velikost);
+                System.out.println("Soubor smazan");
+            }
+        } else {
+            System.out.println("Pocitac nebezi");
+        }
+
+    }
 }
